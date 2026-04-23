@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Web Summarizer</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="brand">
+        <img src="icons/logo.svg" alt="Smart Web Summarizer logo" class="logo" />
+        <div>
+          <h1>Smart Web Summarizer</h1>
+          <p class="subtext">Turn long pages into clear takeaways.</p>
+        </div>
+      </header>
+
+      <section class="controls">
+        <label for="length">Summary length</label>
+        <select id="length">
+          <option value="short">Short</option>
+          <option value="medium" selected>Medium</option>
+          <option value="long">Long</option>
+        </select>
+
+        <button id="summarizeBtn">Summarize Current Page</button>
+        <p id="status" class="status"></p>
+      </section>
+
+      <section id="result" class="result hidden">
+        <h2>Summary</h2>
+        <p id="summaryText"></p>
+        <h3>Key Points</h3>
+        <ul id="bullets"></ul>
+        <p id="meta" class="meta"></p>
+      </section>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
