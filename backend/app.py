@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 import traceback
-
+import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from summarizer import summarize_text
-
 load_dotenv()
+
+from summarizer import summarize_text
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +16,8 @@ CORS(app)
 
 @app.get("/health")
 def health_check():
-    return jsonify({"ok": True})
+    use_remote = os.getenv("USE_HF_INFERENCE_API", "false").lower() == "true"
+    return jsonify({"ok": True, "mode": "hosted" if use_remote else "local"})
 
 
 @app.post("/summarize")

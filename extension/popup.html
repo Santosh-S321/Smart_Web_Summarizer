@@ -2,39 +2,63 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Web Summarizer</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <main class="container">
-      <header class="brand">
-        <img src="icons/logo.svg" alt="Smart Web Summarizer logo" class="logo" />
-        <div>
-          <h1>Smart Web Summarizer</h1>
-          <p class="subtext">Turn long pages into clear takeaways.</p>
-        </div>
+    <main class="app">
+      <header class="top">
+        <img src="icons/logo.svg" alt="" class="logo" width="28" height="28" />
+        <h1>Smart Web Summarizer</h1>
+        <span id="backendStatus" class="backend" data-state="checking">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="backendText">Checking backend</span>
+        </span>
       </header>
 
       <section class="controls">
-        <label for="length">Summary length</label>
-        <select id="length">
-          <option value="short">Short</option>
-          <option value="medium" selected>Medium</option>
-          <option value="long">Long</option>
-        </select>
-
-        <button id="summarizeBtn">Summarize Current Page</button>
-        <p id="status" class="status"></p>
+        <fieldset>
+          <legend>Summary length</legend>
+          <div class="segmented">
+            <input type="radio" name="length" id="len-short" value="short" />
+            <label for="len-short">Short</label>
+            <input type="radio" name="length" id="len-medium" value="medium" checked />
+            <label for="len-medium">Medium</label>
+            <input type="radio" name="length" id="len-long" value="long" />
+            <label for="len-long">Long</label>
+          </div>
+        </fieldset>
+        <button id="summarizeBtn" class="primary" type="button">Summarize this page</button>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
       </section>
 
-      <section id="result" class="result hidden">
-        <h2>Summary</h2>
-        <p id="summaryText"></p>
-        <h3>Key Points</h3>
-        <ul id="bullets"></ul>
-        <p id="meta" class="meta"></p>
+      <section id="loading" class="loading hidden" aria-hidden="true">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line short"></span>
       </section>
+
+      <article id="result" class="result hidden">
+        <p id="pageTitle" class="page-title"></p>
+        <p id="summaryText" class="summary"></p>
+
+        <h2>Key points</h2>
+        <ul id="bullets" class="points"></ul>
+
+        <p id="truncatedNote" class="note hidden">
+          This page is long, so only the first part was summarized.
+        </p>
+
+        <footer class="result-footer">
+          <p id="savings" class="savings"></p>
+          <button id="copyBtn" class="ghost" type="button">Copy</button>
+        </footer>
+
+        <details class="details">
+          <summary>Details</summary>
+          <dl id="meta" class="meta"></dl>
+        </details>
+      </article>
     </main>
 
     <script src="popup.js"></script>
