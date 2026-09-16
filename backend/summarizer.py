@@ -39,7 +39,12 @@ LENGTH_PRESETS = {
 # ---------- Text helpers ----------
 
 def clean_text(text: str) -> str:
-    return re.sub(r"\s+", " ", text or "").strip()
+    text = re.sub(r"\[\d+(?:\s*[,\u2013-]\s*\d+)*\]", "", text or "")  # remove [19], [3, 4], [12-15]
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def tidy_summary(summary: str) -> str:
+    return re.sub(r"\s+([.,!?;:])", r"\1", summary).strip()
 
 
 def split_into_chunks(text: str, chunk_size: int = CHUNK_CHAR_SIZE, overlap: int = CHUNK_OVERLAP) -> List[str]:
@@ -224,6 +229,7 @@ def summarize_text(text: str, length: str = "medium") -> Dict[str, object]:
 
         # Reduce: summarize the combined summaries into the final result.
         summary = summarize_chunk(merged, max_length, min_length, use_remote_api)
+        summary = tidy_summary(summary)
 
     processing_ms = int((time.time() - start_time) * 1000)
 
