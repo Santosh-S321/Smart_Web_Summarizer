@@ -193,7 +193,7 @@ Invalid input returns `400` with an `error` message.
 - Key points are currently sentences taken from the summary
 - Both models are trained on news articles and may lean on a page's opening sentences
 
-## Roadmap
+## Future work
 
 - Evaluate both models with ROUGE and latency on a benchmark dataset
 - Generate key points independently from the summary
